@@ -2,9 +2,7 @@
   "name": "quran-center",
   "version": "1.0.0",
   "type": "module",
-  "license": "MIT",
   "scripts": {
-    "build": "echo \"No build step required\"",
     "start": "node server/index.js"
   },
   "dependencies": {
