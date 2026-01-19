@@ -4,6 +4,7 @@ hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist"]
 
 [nix]
 channel = "stable-24_05"
+packages = ["unrar"]
 
 [[ports]]
 localPort = 5000
@@ -38,5 +39,5 @@ task = "shell.exec"
 args = "npm run dev"
 waitForPort = 5000
 
-[objectStorage]
-defaultBucketID = "replit-objstore-972c409d-4c27-4d12-a824-40ab1b4c5609"
+[agent]
+integrations = ["javascript_log_in_with_replit:2.0.0"]

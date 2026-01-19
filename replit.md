@@ -1,16 +1,8 @@
-# Quran Memorization Center Management System
+# Quran Center Student Portal
 
 ## Overview
 
-This is a full-stack web application for managing a Quran memorization center (مركز التحفيظ). The system enables teachers and administrators to track students' Quran memorization progress, manage student records, and visualize performance statistics.
-
-**Core Features:**
-- Student management (add, edit, delete, bulk import via Excel)
-- Progress tracking for memorization and review sessions
-- Teacher/admin authentication with role-based access
-- Student self-service portal for viewing personal progress
-- Dashboard with performance analytics and charts
-- Full RTL (Right-to-Left) Arabic interface
+A student portal for a Quran memorization center (مركز القرآن الكريم) built with React and Express. The application allows students to track their Quran memorization progress, recording which surahs they've completed and when they last studied. The interface is designed for Arabic speakers with RTL layout support.
 
 ## User Preferences
 
@@ -19,83 +11,56 @@ Preferred communication style: Simple, everyday language.
 ## System Architecture
 
 ### Frontend Architecture
-- **Framework:** React 18 with TypeScript
-- **Routing:** Wouter (lightweight client-side routing)
-- **State Management:** TanStack React Query for server state
-- **UI Components:** Shadcn/ui built on Radix UI primitives
-- **Styling:** Tailwind CSS with custom Islamic-themed color palette (Emerald Green primary, Gold accent, Cream background)
-- **Forms:** React Hook Form with Zod validation
-- **Charts:** Recharts for data visualization
-- **Fonts:** Cairo (UI text) and Amiri (decorative Arabic typography)
+- **Framework**: React 18 with TypeScript
+- **Routing**: Wouter for client-side routing
+- **State Management**: TanStack React Query for server state and caching
+- **Styling**: Tailwind CSS with shadcn/ui component library (New York style)
+- **Animations**: Framer Motion for smooth page transitions and UI animations
+- **Form Handling**: React Hook Form with Zod validation
+- **Typography**: Plus Jakarta Sans for body text, Amiri serif font for Arabic/Islamic headers
 
 ### Backend Architecture
-- **Runtime:** Node.js with Express
-- **Language:** TypeScript (ESM modules)
-- **API Pattern:** REST endpoints defined in shared route contracts
-- **Authentication:** Passport.js with local strategy, session-based auth using express-session
-- **Password Hashing:** Node.js crypto scrypt
+- **Framework**: Express.js with TypeScript
+- **API Design**: REST API with typed route definitions in shared/routes.ts
+- **Database ORM**: Drizzle ORM with PostgreSQL
+- **Schema Validation**: Zod schemas shared between client and server via drizzle-zod
+
+### Authentication
+- **Provider**: Replit Auth (OpenID Connect)
+- **Session Storage**: PostgreSQL-backed sessions via connect-pg-simple
+- **Protected Routes**: Middleware-based authentication checks on API routes
 
 ### Data Storage
-- **Database:** PostgreSQL
-- **ORM:** Drizzle ORM with drizzle-zod for schema validation
-- **Session Store:** connect-pg-simple for PostgreSQL-backed sessions
-- **Schema Location:** `shared/schema.ts` contains all table definitions
+- **Database**: PostgreSQL
+- **Tables**: 
+  - `users` - User profiles from Replit Auth
+  - `sessions` - Session storage for authentication
+  - `student_progress` - Tracks surah completion status per student
 
-### Project Structure
-```
-├── client/           # React frontend
-│   ├── src/
-│   │   ├── components/   # Reusable UI components
-│   │   ├── pages/        # Route page components
-│   │   ├── hooks/        # Custom React hooks (auth, students, progress)
-│   │   └── lib/          # Utilities and query client
-├── server/           # Express backend
-│   ├── index.ts      # Entry point
-│   ├── routes.ts     # API route handlers
-│   ├── storage.ts    # Database operations interface
-│   ├── auth.ts       # Authentication setup
-│   └── db.ts         # Database connection
-├── shared/           # Shared code between client/server
-│   ├── schema.ts     # Drizzle database schema
-│   └── routes.ts     # API route contracts with Zod schemas
-```
-
-### Key Design Decisions
-
-1. **Shared Route Contracts:** API endpoints are defined once in `shared/routes.ts` with Zod schemas for type safety across client and server.
-
-2. **RTL-First Design:** The entire application is built for Arabic language with RTL text direction set at the HTML root level.
-
-3. **Role-Based Access:** Two user roles exist - "admin" and "teacher" - with admin having additional capabilities like adding new teachers.
-
-4. **Dual Login Systems:** Separate authentication flows for staff (username/password) and students (name + birth date).
-
-5. **Excel Import:** Students can be bulk imported from Excel files using the xlsx library, supporting Arabic column headers.
+### Build System
+- **Development**: Vite for frontend with HMR
+- **Production**: esbuild bundles server, Vite builds client
+- **Output**: Single `dist` directory with bundled server and static client files
 
 ## External Dependencies
 
 ### Database
-- **PostgreSQL** - Primary database (requires DATABASE_URL environment variable)
-- **Drizzle Kit** - Database migrations via `npm run db:push`
+- PostgreSQL via `DATABASE_URL` environment variable
+- Drizzle Kit for schema migrations (`npm run db:push`)
 
 ### Authentication
-- **Passport.js** - Authentication middleware
-- **express-session** - Session management
-- **connect-pg-simple** - PostgreSQL session store
+- Replit OpenID Connect provider
+- Requires `REPL_ID`, `ISSUER_URL`, and `SESSION_SECRET` environment variables
 
-### Frontend Libraries
-- **@tanstack/react-query** - Data fetching and caching
-- **Radix UI** - Accessible UI primitives (dialog, dropdown, select, etc.)
-- **recharts** - Chart components
-- **xlsx** - Excel file parsing for bulk student import
-- **date-fns** - Date formatting utilities
-- **wouter** - Client-side routing
+### UI Components
+- Radix UI primitives for accessible components
+- Lucide React for icons
+- date-fns for date formatting
 
-### Build Tools
-- **Vite** - Frontend build and dev server
-- **esbuild** - Server bundling for production
-- **tsx** - TypeScript execution for development
-
-### Environment Variables Required
-- `DATABASE_URL` - PostgreSQL connection string
-- `SESSION_SECRET` - Secret for session encryption (defaults to "r3pl1t" in development)
+### Key npm packages
+- `drizzle-orm` / `drizzle-zod` - Database ORM and schema validation
+- `express-session` / `connect-pg-simple` - Session management
+- `openid-client` / `passport` - Authentication
+- `@tanstack/react-query` - Data fetching and caching
+- `framer-motion` - Animations
+- `wouter` - Lightweight routing

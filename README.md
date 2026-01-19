@@ -1,9 +1,21 @@
-# Quran Center – Render Ready
+# Quran Center Student Portal
 
-This package.json is cleaned and ready for Render deployment.
+نظام إدارة طلاب مركز القرآن الكريم - بوابة الطالب ولوحة تحكم المعلمين.
 
-Build Command (Render):
-npm install
+## المميزات
+- بوابة دخول للطلاب (الاسم وتاريخ الميلاد).
+- لوحة تحكم للمعلمين والمديرين.
+- تتبع حفظ ومراجعة القرآن الكريم.
+- دعم كامل للغة العربية وواجهة RTL.
 
-Start Command (Render):
-npm start
+## المتطلبات
+- Node.js (v18+)
+- PostgreSQL Database
+
+## التشغيل التجريبي
+1. `npm install`
+2. `npm run dev`
+
+## قاعدة البيانات
+يستخدم المشروع Drizzle ORM مع PostgreSQL. تأكد من ضبط `DATABASE_URL`.
+لإنشاء الجداول: `npm run db:push`
