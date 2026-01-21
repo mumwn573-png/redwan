@@ -16,6 +16,12 @@
 1. `npm install`
 2. `npm run dev`
 
+## النشر على GitHub Pages
+يتم النشر تلقائياً عند الدفع (Push) إلى فرع `main` عبر GitHub Actions. تأكد من تفعيل "GitHub Pages" في إعدادات المستودع واختيار "GitHub Actions" كمصدر للنشر.
+
+## ملاحظة هامة
+GitHub Pages تدعم المواقع الساكنة فقط (Frontend). هذا المشروع يحتوي على خادم (Backend) وقاعدة بيانات، لذا لن تعمل وظائف الخادم (مثل تسجيل الدخول وحفظ البيانات) على GitHub Pages مباشرة. يتطلب تشغيل النظام الكامل استضافة تدعم Node.js وقاعدة بيانات PostgreSQL.
+
 ## قاعدة البيانات
 يستخدم المشروع Drizzle ORM مع PostgreSQL. تأكد من ضبط `DATABASE_URL`.
 لإنشاء الجداول: `npm run db:push`
